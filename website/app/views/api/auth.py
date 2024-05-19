@@ -31,7 +31,7 @@ class RegisterView(APIView):
 class LoginView(APIView):
     @takes_json
     def post(self, request: HttpRequest):
-        form = AuthenticationForm(self.json_input)
+        form = AuthenticationForm(data=self.json_input)
         if form.is_valid():
             user = form.get_user()
             token = Token.objects.create_token(user)
