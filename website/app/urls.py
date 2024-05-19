@@ -8,8 +8,8 @@ from .views.api.auth import RegisterView, LoginView
 from .views import tournament_finish_view
 
 urlpatterns = [
-    path("auth/register", RegisterView.as_view(), name="register"),
-    path("auth/login", LoginView.as_view(), name="login"),
+    path("auth/register/", RegisterView.as_view(), name="register"),
+    path("auth/login/", LoginView.as_view(), name="login"),
 ]
 
 if settings.DEBUG:
