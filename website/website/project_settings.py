@@ -9,6 +9,17 @@ DEFAULT_EXECUTION_TL = 10
 # - Environment -
 ENABLE_DOCKER = False
 
+# - Frontend Languages transliteration -
+
+FRONTEND_LANGUAGES = {
+    'C++': 'cpp',
+    'C#': 'cs',
+    'C': 'c',
+    'Python': 'py',
+    'Javascript': 'js',
+    'Java': 'Java',
+}
+
 # - Compiler -
 SUPPORTED_LANGUAGES = ['py', 'cpp']
 

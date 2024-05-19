@@ -4,11 +4,13 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 from .models.tournament import Tournament
+from .models.game import Game
+
 
 class TournamentForm(ModelForm):
     class Meta:
         model = Tournament
-        fields = ['name', 'game', 'system', 'finish_registration_time','tournament_start_time','max_of_players']
+        fields = ['name', 'game', 'system', 'finish_registration_time', 'tournament_start_time', 'max_of_players']
         '''
         widgets = {
             'name': TextInput(attrs={
@@ -38,7 +40,13 @@ class TournamentForm(ModelForm):
         }
         '''
 
-        
+
+class GameForm(ModelForm):
+    class Meta:
+        model = Game
+        fields = ['name', 'number_of_players', 'win_point', 'lose_point', 'rules']
+
+
 class NewUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
 
