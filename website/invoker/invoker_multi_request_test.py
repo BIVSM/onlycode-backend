@@ -36,7 +36,7 @@ class TestInvokerMultiRequest(TestCase):
         invoker_report = InvokerReport()
 
         invoker_multi_request = InvokerMultiRequest([mock_request])
-        invoker_multi_request.subscribe2reports(mock_notify)
+        invoker_multi_request.subscribe_to_reports(mock_notify)
 
         invoker_multi_request.notify(invoker_report)
         mock_notify.assert_called()
@@ -49,7 +49,7 @@ class TestInvokerMultiRequest(TestCase):
         invoker_report = InvokerReport()
 
         invoker_multi_request = InvokerMultiRequest(invoker_requests)
-        invoker_multi_request.subscribe2reports(mock_notify)
+        invoker_multi_request.subscribe_to_reports(mock_notify)
 
         invoker_multi_request.notify(invoker_report)
         mock_notify.assert_not_called()
@@ -62,7 +62,7 @@ class TestInvokerMultiRequest(TestCase):
         invoker_reports = [InvokerReport() for _ in range(3)]
 
         invoker_multi_request = InvokerMultiRequest(invoker_requests)
-        invoker_multi_request.subscribe2reports(mock_notify)
+        invoker_multi_request.subscribe_to_reports(mock_notify)
 
         for invoker_report in invoker_reports:
             invoker_multi_request.notify(invoker_report)
@@ -81,7 +81,7 @@ class TestInvokerMultiRequest(TestCase):
             invoker_requests[index].process = invoker_process[index]
 
         invoker_multi_request = InvokerMultiRequest(invoker_requests)
-        invoker_multi_request.subscribe2processes(mock.notify_processes)
+        invoker_multi_request.subscribe_to_processes(mock.notify_processes)
 
         invoker_multi_request.send_process()
 
@@ -91,7 +91,7 @@ class TestInvokerMultiRequest(TestCase):
         rep_mock = Mock()
         pro_mock = Mock()
         invoker_multi_request = InvokerMultiRequest([])
-        invoker_multi_request.subscribe2reports(rep_mock)
-        invoker_multi_request.subscribe2processes(pro_mock)
+        invoker_multi_request.subscribe_to_reports(rep_mock)
+        invoker_multi_request.subscribe_to_processes(pro_mock)
         self.assertEqual(invoker_multi_request.report_subscribers[0], rep_mock)
         self.assertEqual(invoker_multi_request.process_subscribers[0], pro_mock)

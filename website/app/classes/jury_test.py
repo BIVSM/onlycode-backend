@@ -72,8 +72,8 @@ class TestJury(unittest.TestCase):
         jury = Jury(invoker_multi_request)
         notify_return = getNotify(invoker_multi_request, self)
 
-        invoker_multi_request.subscribe2processes(jury.notify_processes)
-        invoker_multi_request.subscribe2processes(notify_return.notify_processes)
+        invoker_multi_request.subscribe_to_processes(jury.notify_processes)
+        invoker_multi_request.subscribe_to_processes(notify_return.notify_processes)
         invoker_multi_request.start()
 
         while not (play_invoker_request.process and strategy_invoker_request1.process and strategy_invoker_request2.process):
@@ -101,7 +101,7 @@ class TestJury(unittest.TestCase):
 
         jury = Jury(invoker_multi_request)
 
-        invoker_multi_request.subscribe2processes(jury.notify_processes)
+        invoker_multi_request.subscribe_to_processes(jury.notify_processes)
         invoker_multi_request.start()
 
         while not (play_invoker_request.process and strategy_invoker_request1.process and strategy_invoker_request2.process):
@@ -136,8 +136,8 @@ class TestJury(unittest.TestCase):
 
         notify_return = getNotify(invoker_multi_request, self, jury)
 
-        invoker_multi_request.subscribe2processes(jury.notify_processes)
-        invoker_multi_request.subscribe2processes(notify_return.notify_processes)
+        invoker_multi_request.subscribe_to_processes(jury.notify_processes)
+        invoker_multi_request.subscribe_to_processes(notify_return.notify_processes)
         invoker_multi_request.start()
 
 
@@ -160,7 +160,7 @@ class TestJury(unittest.TestCase):
 
         jury = Jury(invoker_multi_request)
 
-        invoker_multi_request.subscribe2processes(jury.notify_processes)
+        invoker_multi_request.subscribe_to_processes(jury.notify_processes)
         invoker_multi_request.start()
 
         while not (play_invoker_request.process and strategy_invoker_request1.process and strategy_invoker_request2.process):

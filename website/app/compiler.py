@@ -51,7 +51,7 @@ class NormalCompile:
         invoker_request = InvokerRequest(' '.join(command), files=[self.source], preserve_files=[self.output_file],
                                          timelimit=timelimit)
         multi_request = InvokerMultiRequest([invoker_request], priority=Priority.RED)
-        multi_request.subscribe2reports(self.notify)
+        multi_request.subscribe_to_reports(self.notify)
         queue = InvokerMultiRequestPriorityQueue()
         queue.add(multi_request)
 

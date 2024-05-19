@@ -30,10 +30,10 @@ class InvokerMultiRequest:
     def __lt__(self, other: InvokerMultiRequest):
         return self.priority > other.priority
 
-    def subscribe2reports(self, callback):
+    def subscribe_to_reports(self, callback):
         self.report_subscribers.append(callback)
 
-    def subscribe2processes(self, callback):
+    def subscribe_to_processes(self, callback):
         self.process_subscribers.append(callback)
 
     def start(self):

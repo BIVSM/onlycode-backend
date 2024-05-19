@@ -88,7 +88,7 @@ class Battle(models.Model):
 
         multi_request = InvokerMultiRequest(requests, priority=Priority.RED)
         self.jury = Jury(multi_request)
-        multi_request.subscribe2processes(self.jury.notify_processes)
+        multi_request.subscribe_to_processes(self.jury.notify_processes)
         multi_request.start()
 
     def run(self, callback: typing.Optional[typing.Callable[[JuryReport], None]] = None):
