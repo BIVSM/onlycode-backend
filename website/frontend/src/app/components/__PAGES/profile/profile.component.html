@@ -1,0 +1,20 @@
+<main class="window-main">
+  <div class="main">
+    <div class="main-content">
+
+      <div class="image-container">
+        <img class="image" src="/static/angular/assets/profile-image.svg" alt="profile image">
+      </div>
+      <div class="info-container">
+        <p class="name" #username></p>
+        <p class="font-size-regular" #email></p>
+        <p class="font-size-regular" #first_name></p>
+        <p class="font-size-regular" #last_name></p>
+        <p class="font-size-regular" #date_joined></p>
+      </div>
+      <div class="logout-container">
+        <p class="logout-text" (click)="logout()">Log out</p>
+      </div>
+    </div>
+  </div>
+</main>
