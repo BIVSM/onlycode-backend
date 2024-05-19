@@ -25,7 +25,6 @@ from onlycode_api import urls as onlycode_urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('app.urls')),
-    path('api-auth/', include('rest_framework.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path("register/", register_request_views.register_request, name="register"),
 ]
