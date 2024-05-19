@@ -3,13 +3,13 @@ from app.models.token import Token
 from app.forms import NewUserForm
 
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AnonymousUser
 from django.http import HttpRequest
 from django.db.utils import IntegrityError
 
 
 def user_to_dict(user: User) -> dict:
-    return {"username": user.username, "email": user.email}
+    return {"id": user.id, "username": user.username, "email": user.email}
 
 
 class RegisterView(APIView):
@@ -38,3 +38,12 @@ class LoginView(APIView):
             return self.render_json(200, {"token": token.token})
         else:
             raise APIError(form.errors.as_text(), 400)
+
+
+class ProfileView(APIView):
+    @takes_json
+    def get(self, request: HttpRequest):
+        user = request.user
+        if user and not isinstance(user, AnonymousUser):
+            return self.render_json(200, user_to_dict(user))
+        raise APIError("You are not logged in any account!", 403)
