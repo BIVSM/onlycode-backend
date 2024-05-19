@@ -16,16 +16,16 @@ class GameView(APIView):
         else:
             try:
                 game = Game.objects.get(pk=game_id)
-            except:
+            except Game.DoesNotExist:
                 raise APIError("Requested game not found", 404)
             serialized_game = serializers.serialize('json', [game])
             serialized_game = ast.literal_eval(serialized_game)[0]
             serialized_game['fields']['id'] = serialized_game['pk']
             serialized_game = serialized_game['fields']
             try:
-                with open(f'media/{serialized_game["rules"]}', 'r') as file:
+                with game.rules.open() as file:
                     serialized_game['rules'] = file.read()
-            except:
+            except ValueError:
                 serialized_game['rules'] = 'Rules does not exist'
             return self.render_json(200, {'game': serialized_game})
 
