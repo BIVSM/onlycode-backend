@@ -39,8 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
-    'onlycode_api',
 
     'web.apps.WebConfig',
     'app.apps.MyAppConfig',
@@ -56,6 +54,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'app.middleware.token_auth_middleware'
 ]
 
 ROOT_URLCONF = 'website.urls'
@@ -162,5 +162,7 @@ Q_CLUSTER = {
     'bulk': 10,
     'orm': 'default'
 }
+
+TOKEN_SESSION_LIFETIME = 12
 
 from project_settings import *

@@ -1,10 +1,9 @@
 from django import forms
-from django.forms import ModelForm, TextInput, DateTimeInput, NumberInput
+from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 from .models.tournament import Tournament
-from .models.game import Game
 
 class TournamentForm(ModelForm):
     class Meta:
