@@ -38,12 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'rest_framework',
+    'todo_api'
 
     'web.apps.WebConfig',
     'app.apps.MyAppConfig',
     'invoker.apps.InvokerConfig',
-
-    'django.contrib.staticfiles',
 ]
 
 MIDDLEWARE = [
