@@ -19,6 +19,8 @@ class Priority(enum.IntEnum):
 class InvokerMultiRequest:
     def __init__(self, invoker_requests: list[InvokerRequest], priority: Priority = Priority.GREEN):
         self.subscribers = []
+        self.report_subscribers = []
+        self.process_subscribers = []
         self.claimed_reports = []
         self.invoker_requests = invoker_requests
         self.invoker_requests_count = len(invoker_requests)
@@ -32,6 +34,12 @@ class InvokerMultiRequest:
     def subscribe(self, instance) -> InvokerMultiRequest:
         self.subscribers.append(instance)
         return self
+
+    def subscribe2reports(self, callback):
+        self.report_subscribers.append(callback)
+
+    def subscribe2processes(self, callback):
+        self.process_subscribers.append(callback)
 
     def start(self):
         invoker_pq = InvokerMultiRequestPriorityQueue()
@@ -48,16 +56,20 @@ class InvokerMultiRequest:
         if self.invoker_request_ended == self.invoker_requests_count:
             if self.queue_notify_callback:
                 self.queue_notify_callback()
-            for subscriber in self.subscribers:
-                subscriber.notify(self.claimed_reports)
+            if len(self.subscribers) > 0:
+                raise Exception('SUBSCRIBERS IS DEPRECATED')
+            for subs_notify_rep in self.report_subscribers:
+                subs_notify_rep(self.claimed_reports)
 
     def send_process(self):
         invoker_processes = []
         for invoker_request in self.invoker_requests:
             if invoker_request.process:
                 invoker_processes.append(invoker_request.process)
-        for subscriber in self.subscribers:
-            subscriber.notify_processes(invoker_processes)
+        if len(self.subscribers) > 0:
+            raise Exception('SUBSCRIBERS IS DEPRECATED')
+        for subs_notify_proc in self.process_subscribers:
+            subs_notify_proc(invoker_processes)
 
 
 __all__ = ["InvokerMultiRequest", "Priority"]

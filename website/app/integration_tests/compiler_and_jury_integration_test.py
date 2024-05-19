@@ -67,8 +67,8 @@ class Test(unittest.TestCase):
                 pass
 
         notify_getter = getNotify(IM_process_of_battle, self, jury_of_battle)
-        IM_process_of_battle.subscribe(jury_of_battle)
-        IM_process_of_battle.subscribe(notify_getter)
+        IM_process_of_battle.subscribe2processes(jury_of_battle.notify_processes)
+        IM_process_of_battle.subscribe2reports(notify_getter.notify)
         IM_process_of_battle.start()
 
         self.assertEqual(jury_of_battle.game_state, GameState.PLAY)
