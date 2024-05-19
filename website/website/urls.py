@@ -20,10 +20,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic.base import TemplateView
 from app.views import register_request_views
+from onlycode_api import urls as onlycode_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('app/', include('app.urls')),
+    path('api-auth/', include('rest_framework.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path("register/", register_request_views.register_request, name="register"),
 ]

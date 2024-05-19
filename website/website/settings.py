@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'todo_api'
+    'onlycode_api',
 
     'web.apps.WebConfig',
     'app.apps.MyAppConfig',
