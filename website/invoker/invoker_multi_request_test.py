@@ -31,43 +31,43 @@ class TestInvokerMultiRequest(TestCase):
 
     @patch("invoker.invoker_multi_request.InvokerRequest")
     def test_notify(self, mock_request: Mock):
-        mock = Mock()
+        mock_notify = Mock()
 
         invoker_report = InvokerReport()
 
         invoker_multi_request = InvokerMultiRequest([mock_request])
-        invoker_multi_request.subscribers = [mock]
+        invoker_multi_request.subscribe_to_reports(mock_notify)
 
         invoker_multi_request.notify(invoker_report)
-        mock.notify.assert_called()
+        mock_notify.assert_called()
 
     @patch("invoker.invoker_multi_request.InvokerRequest")
     def test_not_all_notify(self, mock_request: Mock):
-        mock = Mock()
+        mock_notify = Mock()
 
         invoker_requests = [mock_request for _ in range(2)]
         invoker_report = InvokerReport()
 
         invoker_multi_request = InvokerMultiRequest(invoker_requests)
-        invoker_multi_request.subscribers = [mock]
+        invoker_multi_request.subscribe_to_reports(mock_notify)
 
         invoker_multi_request.notify(invoker_report)
-        mock.notify.assert_not_called()
+        mock_notify.assert_not_called()
 
     @patch("invoker.invoker_multi_request.InvokerRequest")
     def test_all_notify(self, mock_request: Mock):
-        mock = Mock()
+        mock_notify = Mock()
 
         invoker_requests = [mock_request for _ in range(3)]
         invoker_reports = [InvokerReport() for _ in range(3)]
 
         invoker_multi_request = InvokerMultiRequest(invoker_requests)
-        invoker_multi_request.subscribers = [mock]
+        invoker_multi_request.subscribe_to_reports(mock_notify)
 
         for invoker_report in invoker_reports:
             invoker_multi_request.notify(invoker_report)
 
-        mock.notify.assert_called_with(invoker_reports)
+        mock_notify.assert_called_with(invoker_reports)
 
     def test_send_processes(self):
         mock = Mock()
@@ -81,14 +81,17 @@ class TestInvokerMultiRequest(TestCase):
             invoker_requests[index].process = invoker_process[index]
 
         invoker_multi_request = InvokerMultiRequest(invoker_requests)
-        invoker_multi_request.subscribers = [mock]
+        invoker_multi_request.subscribe_to_processes(mock.notify_processes)
 
         invoker_multi_request.send_process()
 
         mock.notify_processes.assert_called_with(invoker_process)
 
     def test_subscribe(self):
-        mock = Mock()
+        rep_mock = Mock()
+        pro_mock = Mock()
         invoker_multi_request = InvokerMultiRequest([])
-        invoker_multi_request.subscribe(mock)
-        self.assertEqual(invoker_multi_request.subscribers[0], mock)
+        invoker_multi_request.subscribe_to_reports(rep_mock)
+        invoker_multi_request.subscribe_to_processes(pro_mock)
+        self.assertEqual(invoker_multi_request.report_subscribers[0], rep_mock)
+        self.assertEqual(invoker_multi_request.process_subscribers[0], pro_mock)

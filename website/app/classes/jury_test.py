@@ -52,8 +52,6 @@ class TestJury(unittest.TestCase):
         invoker_multi_request = InvokerMultiRequest(
             [play_invoker_request, strategy_invoker_request2, strategy_invoker_request1])
 
-        jury = Jury(invoker_multi_request)
-        invoker_multi_request.subscribe(jury)
 
         class getNotify():
             def __init__(self, IMR, UC):
@@ -71,10 +69,11 @@ class TestJury(unittest.TestCase):
                     else:
                         self.upper_class.assert_(process in jury.strategies_process)
 
+        jury = Jury(invoker_multi_request)
         notify_return = getNotify(invoker_multi_request, self)
 
-        invoker_multi_request.subscribe(jury)
-        invoker_multi_request.subscribe(notify_return)
+        invoker_multi_request.subscribe_to_processes(jury.notify_processes)
+        invoker_multi_request.subscribe_to_processes(notify_return.notify_processes)
         invoker_multi_request.start()
 
         while not (play_invoker_request.process and strategy_invoker_request1.process and strategy_invoker_request2.process):
@@ -102,8 +101,7 @@ class TestJury(unittest.TestCase):
 
         jury = Jury(invoker_multi_request)
 
-        invoker_multi_request.subscribe(jury)
-
+        invoker_multi_request.subscribe_to_processes(jury.notify_processes)
         invoker_multi_request.start()
 
         while not (play_invoker_request.process and strategy_invoker_request1.process and strategy_invoker_request2.process):
@@ -138,8 +136,8 @@ class TestJury(unittest.TestCase):
 
         notify_return = getNotify(invoker_multi_request, self, jury)
 
-        invoker_multi_request.subscribe(jury)
-        invoker_multi_request.subscribe(notify_return)
+        invoker_multi_request.subscribe_to_processes(jury.notify_processes)
+        invoker_multi_request.subscribe_to_processes(notify_return.notify_processes)
         invoker_multi_request.start()
 
 
@@ -162,7 +160,7 @@ class TestJury(unittest.TestCase):
 
         jury = Jury(invoker_multi_request)
 
-        invoker_multi_request.subscribe(jury)
+        invoker_multi_request.subscribe_to_processes(jury.notify_processes)
         invoker_multi_request.start()
 
         while not (play_invoker_request.process and strategy_invoker_request1.process and strategy_invoker_request2.process):
