@@ -1,16 +1,9 @@
 from app.views.api import APIView, APIError, takes_json
 from app.models import Game
 
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.models import User
 from django.core import serializers
 from django.http import HttpRequest
 import ast
-
-
-def user_to_dict(user: User) -> dict:
-    return {"username": user.username, "email": user.email}
-
 
 class GameView(APIView):
     @takes_json
