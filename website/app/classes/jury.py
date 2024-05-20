@@ -59,20 +59,20 @@ class Jury:
         invoker_label = "player"
         player_number = 1
         invoker_request_sorted_array = []
-        while (player_number <= len(self.strategies_invoker_requests)):
+        while player_number <= len(self.strategies_invoker_requests):
             invoker_label_now = invoker_label + str(player_number)
             index = 0
             end_cycle = 0
             found_player = 0
-            while (end_cycle == 0):
-                if (self.strategies_invoker_requests[index].label == invoker_label_now):
+            while end_cycle == 0:
+                if self.strategies_invoker_requests[index].label == invoker_label_now:
                     end_cycle = 1
                     invoker_request_sorted_array.append(self.strategies_invoker_requests[index])
                     found_player = 1
                 index += 1
-                if (index >= len(self.strategies_invoker_requests)):
+                if index >= len(self.strategies_invoker_requests):
                     end_cycle = 1
-            if (found_player == 0):
+            if found_player == 0:
                 self.jury_report.status = JuryReport.Status.ERROR
                 return self.jury_report
             player_number += 1
@@ -93,20 +93,20 @@ class Jury:
         process_label = "player"
         player_number = 1
         invoker_process_sorted_array = []
-        while (player_number <= len(self.strategies_process)):
+        while player_number <= len(self.strategies_process):
             process_label_now = process_label + str(player_number)
             index = 0
             end_cycle = 0
             found_player = 0
-            while (end_cycle == 0):
-                if (self.strategies_process[index].label == process_label_now):
+            while end_cycle == 0:
+                if self.strategies_process[index].label == process_label_now:
                     end_cycle = 1
                     invoker_process_sorted_array.append(self.strategies_process[index])
                     found_player = 1
                 index += 1
-                if (index >= len(self.strategies_process)):
+                if index >= len(self.strategies_process):
                     end_cycle = 1
-            if (found_player == 0):
+            if found_player == 0:
                 self.jury_report.status = JuryReport.Status.ERROR
                 return self.jury_report
             player_number += 1
@@ -128,10 +128,10 @@ class Jury:
                 play_data = json.loads(play_command)
             except (RuntimeError, json.decoder.JSONDecodeError):
                 return self.mark_error()
-            
+
             match play_data["state"]:
                 case "play":
-                    player_command = self.strategies_process[play_data["player"]-1].connect(play_data["data"])
+                    player_command = self.strategies_process[play_data["player"] - 1].connect(play_data["data"])
                     player_data = json.dumps({"player": play_data["player"], "data": player_command})
                     self.story_of_game.append(player_data)
                 case "end":
@@ -142,7 +142,7 @@ class Jury:
 
                     points = {}
                     for player, point in enumerate(play_data["points"]):
-                        points[player+1] = point
+                        points[player + 1] = point
 
                     self.jury_report.points = points
 
