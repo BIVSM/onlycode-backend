@@ -27,6 +27,11 @@ class RegisterView(APIView):
         else:
             raise APIError(form.errors.as_text(), 400)
 
+    @takes_json
+    def options(self, request: HttpRequest):
+        print(self.json_input)
+        return self.render_json(200, {})
+
 
 class LoginView(APIView):
     @takes_json
