@@ -13,21 +13,20 @@ class GameView(APIView):
         game_id = str(self.json_input.get("id"))
         if not game_id.isdigit():
             raise APIError("Game ID should be an integer", 422)
-        else:
-            try:
-                game = Game.objects.get(pk=game_id)
-            except Game.DoesNotExist:
-                raise APIError("Requested game not found", 404)
-            serialized_game = serializers.serialize('json', [game])
-            serialized_game = ast.literal_eval(serialized_game)[0]
-            serialized_game['fields']['id'] = serialized_game['pk']
-            serialized_game = serialized_game['fields']
-            try:
-                with game.rules.open() as file:
-                    serialized_game['rules'] = file.read()
-            except ValueError:
-                serialized_game['rules'] = 'Rules does not exist'
-            return self.render_json(200, {'game': serialized_game})
+        try:
+            game = Game.objects.get(pk=game_id)
+        except Game.DoesNotExist:
+            raise APIError("Requested game not found", 404)
+        serialized_game = serializers.serialize('json', [game])
+        serialized_game = ast.literal_eval(serialized_game)[0]
+        serialized_game['fields']['id'] = serialized_game['pk']
+        serialized_game = serialized_game['fields']
+        try:
+            with game.rules.open() as file:
+                serialized_game['rules'] = file.read()
+        except ValueError:
+            serialized_game['rules'] = 'Rules does not exist'
+        return self.render_json(200, {'game': serialized_game})
 
     @takes_json
     def post(self, request: HttpRequest):
