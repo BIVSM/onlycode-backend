@@ -53,7 +53,11 @@ class Battle(models.Model):
         if file.split(".")[-1][0] != 'e':
             play_compiled = CompiledFile()
             list_compiled_file.append(play_compiled)
-            Compiler(file, file.split(".")[-1], play_compiled.get_compiled_file).compile()
+            compiler = Compiler(file, file.split(".")[-1], play_compiled.get_compiled_file)
+            compiler.compile()
+            while compiler.report is None:
+                continue
+            # TODO
             file = os.path.join(MEDIA_ROOT, str(play_compiled.compiled_file))
 
         players_in_battle = PlayersInBattle.objects.filter(battle=self)
